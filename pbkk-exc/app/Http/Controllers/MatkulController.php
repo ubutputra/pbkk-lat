@@ -3,13 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\dosen;
-use App\mhs;
+use App\matkul;
 
-use DB;
-use App\Quotation;
-
-class MhsController extends Controller
+class MatkulController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,16 +15,8 @@ class MhsController extends Controller
     public function index()
     {
         //
-        //Query Join
-        //$mhs = DB::table('mhs')->join('dosens','mhs.nipdosenwali','=','dosens.nip')->get();
-        //Raw
-        //$mhs = DB::select( DB::raw("select * from dosens JOIN mhs ON dosens.nip = mhs.nipdosenwali") );
-       
-        $mhs = mhs::with('dosen')->get();
-       //echo $mhs;
-        return view ('mhs.index',compact('mhs'));
-
-
+        $matkul = matkul::all();
+        return view('matkul.index',compact('matkul'));
     }
 
     /**
@@ -39,9 +27,7 @@ class MhsController extends Controller
     public function create()
     {
         //
-        $dsn = dosen::pluck('namadosen','nip');
-        return view ('mhs.create',compact('dsn'));
-
+        return view ('matkul.create');
     }
 
     /**
@@ -53,9 +39,8 @@ class MhsController extends Controller
     public function store(Request $request)
     {
         //
-        mhs::create($request->all());        
-        return redirect('/mhs');
-
+        matkul::create($request->all());
+        return redirect('/matkul');
     }
 
     /**
@@ -78,10 +63,6 @@ class MhsController extends Controller
     public function edit($id)
     {
         //
-        $mhsnya    = mhs::findorfail($id);
-        $dosennya  = dosen::pluck('namadosen','nip');
-        return view('mhs.edit',compact('mhsnya','dosennya'));
-
     }
 
     /**
@@ -94,10 +75,6 @@ class MhsController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $mhsnya = mhs::findorfail($id);
-        $mhsnya->update($request->all());
-        return redirect('/mhs');
-    
     }
 
     /**
@@ -109,9 +86,5 @@ class MhsController extends Controller
     public function destroy($id)
     {
         //
-        $mhsnya = mhs::findorfail($id);
-        $mhsnya->delete();
-        return redirect('/mhs');
-
     }
 }

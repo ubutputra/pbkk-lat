@@ -50,4 +50,5 @@ Route::get('/', function () {
 });
 Route::resource('mhs','MhsController');
 Route::resource('dosen','DosenController');
+Route::resource('matkul','MatkulController');
 

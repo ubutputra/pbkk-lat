@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\mhs;
 use App\dosen;
 
 class DosenController extends Controller
@@ -16,8 +16,10 @@ class DosenController extends Controller
     public function index()
     {
         //
-        $dsn = dosen::all();
-    return view('dosen.index',compact('dsn'));
+        //$dsn = dosen::all();
+        $dsn = dosen::with('mhs')->get();
+        //echo $dsn;
+        return view('dosen.index',compact('dsn'));
 
     }
 

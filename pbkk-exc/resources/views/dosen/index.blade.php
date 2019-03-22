@@ -15,12 +15,19 @@
 <table class="table table-bordered table-striped 
               table-hover table-condensed tfix">
 <thead align="center">
-<tr><td><b>NIP</b></td><td><b>Nama DOSEN</b></td>
+<tr><td><b>NIP</b></td>
+<td><b>Nama DOSEN</b></td>
+<td><b>Nama mahasiswa wali</b></td>
     <td colspan="2"><b>MENU</b></td></tr>
 </thead>
 
 @foreach($dsn as $m)
-<tr><td>{{ $m->nip }}</td><td>{{ $m->namadosen }}</td>
+<tr><td>{{ $m->nip }}</td>
+    <td>{{ $m->namadosen }}</td>
+    <td>@foreach ($m->mhs as $item)
+        {{$item->nama}}
+        
+    @endforeach</td>
 <td align="center" width="30px">
 <a href="/dosen/{{$m->nip}}/edit" class="btn btn-warning btn-sm" 
 role="button"><i class="fa fa-pencil-square"></i> Edit</a>                           </td>

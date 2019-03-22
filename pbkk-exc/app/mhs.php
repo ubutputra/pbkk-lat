@@ -14,4 +14,9 @@ class mhs extends Model
     'nrp','nama','nipdosenwali'
     ];
 
+    public function dosen()
+    {
+        return $this->belongsTo('App\dosen','nipdosenwali','nip');
+    }
+
 }
