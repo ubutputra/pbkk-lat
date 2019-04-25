@@ -20,11 +20,11 @@ class MhsController extends Controller
     {
         //
         //Query Join
-        //$mhs = DB::table('mhs')->join('dosens','mhs.nipdosenwali','=','dosens.nip')->get();
+        // $mhs = DB::table('mhs')->join('dosens','mhs.nipdosenwali','=','dosens.nip')->get();
         //Raw
-        //$mhs = DB::select( DB::raw("select * from dosens JOIN mhs ON dosens.nip = mhs.nipdosenwali") );
+        // $mhs = DB::select( DB::raw("select * from dosens JOIN mhs ON dosens.nip = mhs.nipdosenwali") );
        
-        $mhs = mhs::with('dosen')->get();
+        $mhs = mhs::with('dosen')->paginate(10);
        //echo $mhs;
         return view ('mhs.index',compact('mhs'));
 
@@ -40,6 +40,7 @@ class MhsController extends Controller
     {
         //
         $dsn = dosen::pluck('namadosen','nip');
+        // dd($dsn);
         return view ('mhs.create',compact('dsn'));
 
     }
@@ -53,6 +54,7 @@ class MhsController extends Controller
     public function store(Request $request)
     {
         //
+        // dd($request->all());
         mhs::create($request->all());        
         return redirect('/mhs');
 
@@ -75,7 +77,7 @@ class MhsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id)   
     {
         //
         $mhsnya    = mhs::findorfail($id);

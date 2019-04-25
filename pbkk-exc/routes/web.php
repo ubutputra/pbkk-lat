@@ -48,7 +48,32 @@ use Illuminate\Support\Facades\Input;
 Route::get('/', function () {
   return view('home');
 });
-Route::resource('mhs','MhsController');
-Route::resource('dosen','DosenController');
-Route::resource('matkul','MatkulController');
+Route::get('/mengajar', function () {
+  return view('mengajar.create');
+});
+Route::get('/admin', 'AdminController@admin')
+  ->middleware('is_admin')
+  ->name('admin');
+  Route::middleware(['is_admin'])->group(function () {
+    Route::resource('dosen','DosenController');
+  Route::resource('matkul','MatkulController');
+  Route::resource('mengajar','MengajarController');
+  Route::resource('mengambil','MengambilController');
+  Route::post('/input/nilai','FrsController@InputNilai');
 
+  });
+Route::resource('mhs','MhsController');
+// Route::resource('dosen','DosenController');
+// Route::resource('matkul','MatkulController');
+// Route::resource('mengajar','MengajarController');
+// Route::resource('mengambil','MengambilController');
+// Route::post('/input/nilai','FrsController@InputNilai');
+
+Auth::routes();
+Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+Route::get('/frs','FrsController@index');
+
+Route::post('/frs/submit','FrsController@store');

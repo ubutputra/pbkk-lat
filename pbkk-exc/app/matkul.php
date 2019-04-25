@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class matkul extends Model
 {
     //
+    protected $primaryKey = 'id';
     protected $fillable = [
-        'nama_matkul','id_matkul'
+        'id', 'nama_matkul', 'id_matkul'
         ];
 }

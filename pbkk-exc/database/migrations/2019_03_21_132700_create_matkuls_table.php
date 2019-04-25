@@ -16,8 +16,7 @@ class CreateMatkulsTable extends Migration
         Schema::create('matkuls', function (Blueprint $table) {
             $table->increments('id');
             $table->string('id_matkul',50);
-            $table->string('nama_matkul',50);
-          
+            $table->string('nama_matkul',50);  
             $table->timestamps();
 
         });

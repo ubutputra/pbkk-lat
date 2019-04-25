@@ -25,9 +25,10 @@
 <tr><td>{{ $m->nip }}</td>
     <td>{{ $m->namadosen }}</td>
     <td>@foreach ($m->mhs as $item)
-        {{$item->nama}}
+        {{$item->nama }} /
         
-    @endforeach</td>
+@endforeach</td>
+   
 <td align="center" width="30px">
 <a href="/dosen/{{$m->nip}}/edit" class="btn btn-warning btn-sm" 
 role="button"><i class="fa fa-pencil-square"></i> Edit</a>                           </td>
@@ -41,6 +42,7 @@ role="button"><i class="fa fa-pencil-square"></i> Edit</a>                      
 </td>
  </tr>
 @endforeach
+{{ $dsn->links() }}
 </table>
 </div>
 @else

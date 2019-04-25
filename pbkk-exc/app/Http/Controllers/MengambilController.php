@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\mhs;
-use App\dosen;
-
-class DosenController extends Controller
+use App\matkul;
+use App\Mengambil;
+use DB;
+class MengambilController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,12 +16,9 @@ class DosenController extends Controller
      */
     public function index()
     {
-        //
-        //$dsn = dosen::all();
-        $dsn = dosen::with('mhs')->paginate(10);
-        //echo $dsn;
-        return view('dosen.index',compact('dsn'));
-
+        $m = DB::table('mengambil_matkul')->join('mhs','mhs.nrp','=','mengambil_matkul.nrp_mhs')->join('matkuls','matkuls.id_matkul','=','mengambil_matkul.id_matkul')->get();
+        // dd($m);
+        return view('mengambil.index',compact('m'));
     }
 
     /**
@@ -30,8 +28,10 @@ class DosenController extends Controller
      */
     public function create()
     {
-        //
-        return view ('dosen.create');
+        $mhs = mhs::pluck('nama','nrp');
+        $matkul = matkul::pluck('nama_matkul','id_matkul');
+         //dd($matkul);
+        return view ('mengambil.create',compact('mhs','matkul'));
     }
 
     /**
@@ -42,10 +42,10 @@ class DosenController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        dosen::create($request->all());
-        return redirect('/dosen');
-
+        $input = $request->all();
+        // dd($input);
+         Mengambil::create($request->all());        
+        return redirect('/mengambil');
     }
 
     /**
@@ -68,9 +68,6 @@ class DosenController extends Controller
     public function edit($id)
     {
         //
-        $dsn = dosen::findorfail($id);
-        return view ('dosen.edit',compact('dsn'));
-
     }
 
     /**
@@ -83,10 +80,6 @@ class DosenController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $dsn = dosen::findorfail($id);
-        $dsn->update($request->all());
-        return redirect('/dosen');
-
     }
 
     /**
@@ -98,9 +91,5 @@ class DosenController extends Controller
     public function destroy($id)
     {
         //
-        $dsn = dosen::findorfail($id);
-        $dsn->delete();
-        return redirect('/dosen');
-
     }
 }

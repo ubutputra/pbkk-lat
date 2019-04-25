@@ -1,34 +1,23 @@
-@extends('app')
+@extends('layouts.app')
 
-@section('title')
-    Home
-@endsection
 @section('content')
-<br><br>
-<div class="col-md-2"></div>
-<div class="col-md-4">
-<div class="panel panel-info text-center">
-<div class="panel-heading">
-<h3>Mahasiswa</h3></div>
-<ul class="list-group">
-  <li class="list-group-item"><i class="fa fa-user fa-5x"></i></li>
-  <li class="list-group-item"><a href="/mhs" class="btn btn-primary">
-  <li class="fa fa-user"></i> DATA MAHASISWA</a></li>
-</ul>
-</div>
-</div>
-<div class="col-md-4">
-        <div class="panel panel-info text-center">
-            <div class="panel-heading">
-                <h3>Dosen</h3>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">Dashboard</div>
+
+                <div class="card-body">
+                    @if (session('status'))
+                        <div class="alert alert-success" role="alert">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    You are logged in!
+                </div>
             </div>
-            <ul class="list-group">
-                <li class="list-group-item"><i class="fa fa-university fa-5x"></i></li>
-                <li class="list-group-item"><a href="/dosen" class="btn btn-primary"><i class="fa fa-university"></i> DATA DOSEN</a></li>
-            </ul>
         </div>
     </div>
-    <div class="col-md-2">
-    </div>
+</div>
 @endsection
-              

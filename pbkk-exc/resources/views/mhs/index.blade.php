@@ -18,17 +18,22 @@
    <td><b>NRP</b></td><td><b>Nama Mahasiswa</b></td>
    <td><b>Nama Dosen Wali</b></td>
    <td colspan="2"><b>MENU</b></td></tr></thead>
+   
    @foreach($mhs as $m)
+  
 <tr><td>{{ $m->nrp }}</td><td>{{ $m->nama }}</td>
-<td>{{ $m->dosen->namadosen }}</td><td align="center" width="30px">
+<td>{{ $m->dosen->namadosen }}</td>
+<td align="center" width="30px">
 <a href="/mhs/{{$m->nrp}}/edit" class="btn btn-warning btn-sm" role="button"><i class="fa fa-pencil-square"></i> Edit</a>
-</td><td align="center" width="30px">
+</td>
+<td align="center" width="30px">
 {!! Form::open(array('route' => array('mhs.destroy', $m->nrp),
          'method' => 'delete','style' => 'display:inline')) !!}
 <button class='btn btn-sm btn-danger delete-btn' type='submit'>
 <i class='fa fa-times-circle'></i> Delete </button>
 {!! Form::close() !!} </td> </tr>
 @endforeach
+{{ $mhs->links() }}
 </table>
 </div>
 @else

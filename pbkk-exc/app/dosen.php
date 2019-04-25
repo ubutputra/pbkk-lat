@@ -19,4 +19,6 @@ class dosen extends Model
         return $this->hasMany('App\mhs','nipdosenwali','nip');
     }
 
+    
+
 }

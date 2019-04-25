@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\mhs;
 use App\dosen;
-
-class DosenController extends Controller
+use App\matkul;
+use App\Mengajar;
+use DB;
+use Auth;
+class MengajarController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +18,16 @@ class DosenController extends Controller
     public function index()
     {
         //
-        //$dsn = dosen::all();
-        $dsn = dosen::with('mhs')->paginate(10);
+        $id = Auth::user()->nrp;
+        $m = DB::table('mengajar')->join('dosens','mengajar.id_dosen','=','dosens.nip')->join('matkuls','mengajar.id_matkul','=','matkuls.id_matkul')->get();
+        // $matkul = DB::table('mengajar')->join('matkuls','mengajar.id_matkul','=','matkuls.id_matkul')->get();
+        // dd($m);
+       
+        // $dsn = dosen::with('mhs')->paginate(10);
+        //dd($matkul);
         //echo $dsn;
-        return view('dosen.index',compact('dsn'));
 
+        return view('mengajar.index',compact('m'));
     }
 
     /**
@@ -31,7 +38,10 @@ class DosenController extends Controller
     public function create()
     {
         //
-        return view ('dosen.create');
+        $dsn = dosen::pluck('namadosen','nip');
+        $matkul = matkul::pluck('nama_matkul','id_matkul');
+        // dd($dsn);
+        return view ('mengajar.create',compact('dsn','matkul'));
     }
 
     /**
@@ -43,9 +53,10 @@ class DosenController extends Controller
     public function store(Request $request)
     {
         //
-        dosen::create($request->all());
-        return redirect('/dosen');
-
+        $input = $request->all();
+        //dd($input);
+        Mengajar::create($request->all());        
+        return redirect('/mengajar');
     }
 
     /**
@@ -67,9 +78,15 @@ class DosenController extends Controller
      */
     public function edit($id)
     {
-        //
-        $dsn = dosen::findorfail($id);
-        return view ('dosen.edit',compact('dsn'));
+        
+        // dd($id);
+        $data['mhs'] = DB::table('mengambil_matkul')->where('id_matkul', '=', $id)->get();
+        // dd($data);
+        // if($data['mhs']->isEm{
+        //     return redirect('/mengajar');
+        // }
+        // dd($data);
+        return view ('mengajar.mengambil',$data);
 
     }
 
@@ -83,10 +100,6 @@ class DosenController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $dsn = dosen::findorfail($id);
-        $dsn->update($request->all());
-        return redirect('/dosen');
-
     }
 
     /**
@@ -98,9 +111,5 @@ class DosenController extends Controller
     public function destroy($id)
     {
         //
-        $dsn = dosen::findorfail($id);
-        $dsn->delete();
-        return redirect('/dosen');
-
     }
 }
